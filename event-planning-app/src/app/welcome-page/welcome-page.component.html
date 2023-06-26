@@ -1,0 +1,37 @@
+<p>
+  <mat-toolbar id="header">
+    <span id="header_toolbar">Event Planning Tool</span>
+    <span class="spacer"></span>
+    <button mat-stroked-button color="primary" class="header-btn">Profile</button>
+    <button mat-stroked-button color="primary" class="header-btn">Log Out</button>
+  </mat-toolbar>
+</p>
+
+<p id="main-part">
+<span class="welcome_text"> Welcome!</span>
+  <span class="welcome_text"> We are happy that you chose our services!</span>
+  <span class="welcome_text">Choose from:</span>
+  <mat-chip-listbox id="choose_list" aria-label="Role selection">
+    <mat-chip-option color="warn" (click)="initializeChildComponent('admin')">Admin</mat-chip-option>
+    <mat-chip-option color="accent" (click)="initializeChildComponent('planner')">Planner</mat-chip-option>
+    <mat-chip-option (click)="initializeChildComponent('guest')" >Guest</mat-chip-option>
+  </mat-chip-listbox>
+
+<!--  <app-event-list [role]="role" *ngIf="isInitialized" id="event-table"></app-event-list>-->
+
+  <ng-container *ngIf="role === 'admin'">
+    <app-event-list [role]="role"  id="event-table-admin"></app-event-list>
+  </ng-container>
+
+  <ng-container *ngIf="role === 'planner'">
+    <app-event-list [role]="role"  id="event-table-planner"></app-event-list>
+  </ng-container>
+
+  <ng-container *ngIf="role === 'guest'">
+    <app-event-list [role]="role"  id="event-table-guest"></app-event-list>
+  </ng-container>
+  `
+</p>
+
+
+

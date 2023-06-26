@@ -1,0 +1,30 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.header-btn{
+  margin: 10px;
+  background: lightblue;
+}
+
+#header{
+  background: lightskyblue;
+}
+
+#main-part{
+  margin: 10%;
+  display: flex;
+  flex-direction: column;
+ align-items: center;
+}
+
+.welcome_text{
+  margin: 10px;
+  font-size: 30px;
+  font-family: "Arial Black", sans-serif;
+}
+
+#choose_list{
+  margin: 3%;
+}
+
