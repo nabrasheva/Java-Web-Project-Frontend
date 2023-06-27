@@ -20,15 +20,15 @@
 <!--  <app-event-list [role]="role" *ngIf="isInitialized" id="event-table"></app-event-list>-->
 
   <ng-container *ngIf="role === 'admin'">
-    <app-event-list [role]="role"  id="event-table-admin"></app-event-list>
+    <app-event-list [role]="role"  id="event-table-admin" (eventClicked)="navigateToEvent($event)"></app-event-list>
   </ng-container>
 
   <ng-container *ngIf="role === 'planner'">
-    <app-event-list [role]="role"  id="event-table-planner"></app-event-list>
+    <app-event-list [role]="role"  id="event-table-planner" (eventClicked)="navigateToEvent($event)"></app-event-list>
   </ng-container>
 
   <ng-container *ngIf="role === 'guest'">
-    <app-event-list [role]="role"  id="event-table-guest"></app-event-list>
+    <app-event-list [role]="role"  id="event-table-guest" (eventClicked)="navigateToEvent($event)"></app-event-list>
   </ng-container>
   `
 </p>

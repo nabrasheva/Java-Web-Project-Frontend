@@ -5,13 +5,15 @@ import { AppComponent } from './app.component';
 import {MaterialUIModule} from "./material-ui/material-ui.module";
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { EventListComponent } from './event-list/event-list.component';
-import { MatTableModule } from  '@angular/material/table';
-import { MatButtonModule } from '@angular/material/button';
+// import { MatTableModule } from  '@angular/material/table';
+// import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { AddEventComponent } from './add-event/add-event.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import { UpdateEventComponent } from './update-event/update-event.component';
-
+import { DashboardPageComponent } from './dashboard-page/dashboard-page.component';
+import {AppRoutingModuleModule} from "./app-routing-module/app-routing-module.module";
+import { AddTaskComponent } from './add-task/add-task.component';
 
 @NgModule({
   declarations: [
@@ -20,16 +22,17 @@ import { UpdateEventComponent } from './update-event/update-event.component';
     EventListComponent,
     AddEventComponent,
     UpdateEventComponent,
+    DashboardPageComponent,
+    AddTaskComponent
   ],
   imports: [
     BrowserModule,
     MaterialUIModule,
-    MatTableModule,
-    MatButtonModule,
     CommonModule,
     ReactiveFormsModule,
+    AppRoutingModuleModule
   ],
-  exports:[MatTableModule, CommonModule],
+  exports:[ CommonModule],
   providers: [],
   bootstrap: [AppComponent]
 })

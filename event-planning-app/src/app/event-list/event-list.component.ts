@@ -1,9 +1,10 @@
-import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {AddEventComponent} from "../add-event/add-event.component";
 import {EventRow} from "../model/event-row";
 import {MatTableDataSource} from "@angular/material/table";
 import {UpdateEventComponent} from "../update-event/update-event.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-event-list',
@@ -11,8 +12,7 @@ import {UpdateEventComponent} from "../update-event/update-event.component";
   styleUrls: ['./event-list.component.css']
 })
 export class EventListComponent {
-
-  constructor(private dialog: MatDialog, private changeDetectorRef: ChangeDetectorRef) { }
+  constructor(private dialog: MatDialog, private changeDetectorRef: ChangeDetectorRef, private router: Router) { }
 
   dataSource: MatTableDataSource<EventRow> = new MatTableDataSource([
     { name: 'Event1', date: '2023-06-21'},
@@ -29,6 +29,13 @@ export class EventListComponent {
   event!:EventRow;
 
   displayedColumns: string[] = ['name', 'date'];
+
+
+  @Output() eventClicked: EventEmitter<string> = new EventEmitter<string>();
+
+  onEventClick(eventName: string): void {
+    this.eventClicked.emit(eventName);
+  }
 
   updateEvent(toUpdateEvent: EventRow) {
     const dialogRef: MatDialogRef<UpdateEventComponent, any> = this.dialog.open(UpdateEventComponent, {
