@@ -1,4 +1,4 @@
-<div id="add-form" [formGroup]="taskForm">
+<div id="update-form" [formGroup]="taskForm">
   <mat-form-field>
     <mat-label>Name</mat-label>
     <input matInput id="name-input" formControlName="name">
@@ -6,10 +6,15 @@
 
   <mat-form-field>
     <mat-label>Choose a date</mat-label>
-    <input matInput [min]="minDate" [matDatepicker]="picker" id="date-input" formControlName="due_date">
+    <input matInput  [matDatepicker]="picker" id="date-input" formControlName="due_date">
     <mat-hint>MM/DD/YYYY</mat-hint>
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Description</mat-label>
+    <textarea matInput id="description-input" formControlName="description"></textarea>
   </mat-form-field>
 
   <mat-form-field>
@@ -21,12 +26,7 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Description</mat-label>
-    <textarea matInput id="description-input" formControlName="description"></textarea>
-  </mat-form-field>
-
-  <button type="submit" mat-stroked-button color="primary" (click)="addTask()" >Add Task</button>
+  <button type="submit" mat-stroked-button color="primary" (click)="updateTask()" >Update Event</button>
 
 </div>
 

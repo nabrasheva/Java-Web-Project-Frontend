@@ -7,13 +7,17 @@ import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { EventListComponent } from './event-list/event-list.component';
 // import { MatTableModule } from  '@angular/material/table';
 // import { MatButtonModule } from '@angular/material/button';
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import { AddEventComponent } from './add-event/add-event.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import { UpdateEventComponent } from './update-event/update-event.component';
 import { DashboardPageComponent } from './dashboard-page/dashboard-page.component';
 import {AppRoutingModuleModule} from "./app-routing-module/app-routing-module.module";
 import { AddTaskComponent } from './add-task/add-task.component';
+import { UpdateTaskComponent } from './update-task/update-task.component';
+import { ShowGuestsComponent } from './show-guests/show-guests.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import {MatCardModule} from "@angular/material/card";
 
 @NgModule({
   declarations: [
@@ -23,14 +27,19 @@ import { AddTaskComponent } from './add-task/add-task.component';
     AddEventComponent,
     UpdateEventComponent,
     DashboardPageComponent,
-    AddTaskComponent
+    AddTaskComponent,
+    UpdateTaskComponent,
+    ShowGuestsComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
     MaterialUIModule,
     CommonModule,
     ReactiveFormsModule,
-    AppRoutingModuleModule
+    AppRoutingModuleModule,
+    MatCardModule,
+    NgOptimizedImage
   ],
   exports:[ CommonModule],
   providers: [],

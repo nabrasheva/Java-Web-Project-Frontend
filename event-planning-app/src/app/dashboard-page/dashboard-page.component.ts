@@ -7,6 +7,8 @@ import {TaskRow} from "../model/task-row"
 import {EventRow} from "../model/event-row";
 import {AddEventComponent} from "../add-event/add-event.component";
 import {AddTaskComponent} from "../add-task/add-task.component";
+import {UpdateEventComponent} from "../update-event/update-event.component";
+import {UpdateTaskComponent} from "../update-task/update-task.component";
 
 @Component({
   selector: 'app-dashboard-page',
@@ -18,6 +20,7 @@ export class DashboardPageComponent {
   eventName!: string | null;
   role!: string | null;
   showButtons!:boolean;
+  showUsers!:boolean;
   newTaskRow!: TaskRow;
   dataSource: MatTableDataSource<TaskRow> = new MatTableDataSource([
     { name: 'Task1', due_date: '2023-06-21', status:'To Do'},
@@ -27,8 +30,13 @@ export class DashboardPageComponent {
 
   displayedColumns: string[] = ['name', 'due_date', 'status'];
 
-  constructor(private dialog: MatDialog,private route: ActivatedRoute) { }
+  constructor(private dialog: MatDialog,private route: ActivatedRoute, private router: Router) { }
 
+  navigateToProfile(): void {
+    // Perform the navigation to the destination page using the eventId
+    // Example:
+    this.router.navigate(['profile']).then(r => r);
+  }
   ngOnInit(): void {
     this.route.params.subscribe(params => {
 
@@ -36,6 +44,10 @@ export class DashboardPageComponent {
       this.eventName = params['name'];
     });
 
+    if(this.role == 'admin')
+    {
+      this.showUsers = true;
+    }
     if(this.role == 'admin' || this.role == 'planner')
     {
       this.showButtons = true;
@@ -43,7 +55,7 @@ export class DashboardPageComponent {
     }
   }
 
-  openPopupForm(): void {
+  addTask(): void {
     const dialogRef = this.dialog.open(AddTaskComponent);
     dialogRef.componentInstance.task_row.subscribe((object: TaskRow) => {
       this.newTaskRow = object;
@@ -62,7 +74,19 @@ export class DashboardPageComponent {
     }
   }
 
-  updateTask(element: TaskRow) {
+  updateTask(toUpdateTask: TaskRow) {
+    const dialogRef: MatDialogRef<UpdateTaskComponent, any> = this.dialog.open(UpdateTaskComponent, {
+      data: { task: toUpdateTask }
+    });
 
+    dialogRef.componentInstance.task_row.subscribe((object: TaskRow) => {
+      const updatedTaskIndex = this.dataSource.data.indexOf(toUpdateTask);
+      if (updatedTaskIndex !== -1) {
+        // Update the data for the event at the specified index
+        this.dataSource.data[updatedTaskIndex] = object;
+        this.dataSource._updateChangeSubscription();
+      }
+      this.dialog.closeAll();
+    });
   }
 }

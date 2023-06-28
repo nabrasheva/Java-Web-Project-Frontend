@@ -63,7 +63,7 @@ export class EventListComponent {
     }
   }
 
-  openPopupForm(): void {
+  addEvent(): void {
     const dialogRef = this.dialog.open(AddEventComponent);
     dialogRef.componentInstance.event_row.subscribe((object: EventRow) => {
       this.newEventRow = object;

@@ -5,7 +5,7 @@
   <mat-toolbar id="header">
     <span id="header_toolbar">Event Planning Tool</span>
     <span class="spacer"></span>
-    <button mat-stroked-button color="primary" class="header-btn">Profile</button>
+    <button mat-stroked-button color="primary" class="header-btn" (click)="navigateToProfile()">Profile</button>
     <button mat-stroked-button color="primary" class="header-btn">Log Out</button>
   </mat-toolbar>
 </p>
@@ -30,7 +30,7 @@
   <ng-container *ngIf="showButtons" matColumnDef="update">
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let element">
-      <mat-icon aria-hidden="false" aria-label="Example pen icon" fontIcon="edit" ></mat-icon>
+      <mat-icon aria-hidden="false" aria-label="Example pen icon" fontIcon="edit" (click)="updateTask(element)" ></mat-icon>
     </td>
   </ng-container>
   <ng-container *ngIf="showButtons" matColumnDef="delete">
@@ -47,8 +47,12 @@
 
 </div>
 
-<div *ngIf="showButtons" class="button-add">
-  <button mat-stroked-button color="primary" id="add-btn" (click)="openPopupForm()" >Add Task</button>
+<div *ngIf="showButtons" class="buttons">
+  <button mat-stroked-button color="primary" id="add-btn" (click)="addTask()" >Add Task</button>
+  <div *ngIf="showUsers">
+    <button mat-stroked-button color="primary" id="guests-btn">Show Guests</button>
+    <button mat-stroked-button color="primary" id="planners-btn">Show Planners</button>
+  </div>
 </div>
 
 <!--<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">-->
