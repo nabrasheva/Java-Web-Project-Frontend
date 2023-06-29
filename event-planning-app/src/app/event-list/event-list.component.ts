@@ -5,6 +5,8 @@ import {EventRow} from "../model/event-row";
 import {MatTableDataSource} from "@angular/material/table";
 import {UpdateEventComponent} from "../update-event/update-event.component";
 import {Router} from "@angular/router";
+import {Event} from "../model/event";
+import {EventService} from "../services/event.service";
 
 @Component({
   selector: 'app-event-list',
@@ -12,19 +14,23 @@ import {Router} from "@angular/router";
   styleUrls: ['./event-list.component.css']
 })
 export class EventListComponent {
-  constructor(private dialog: MatDialog, private changeDetectorRef: ChangeDetectorRef, private router: Router) { }
+  constructor(private dialog: MatDialog, private changeDetectorRef: ChangeDetectorRef, private router: Router,private eventService:EventService) { }
 
-  dataSource: MatTableDataSource<EventRow> = new MatTableDataSource([
-    { name: 'Event1', date: '2023-06-21'},
-    { name: 'Event2', date: '2023-06-21'},
-    { name: 'Event3', date: '2023-06-21'},
-  ]) ;
+  dataSource: MatTableDataSource<EventRow> = new MatTableDataSource();
+  //   { name: 'Event1', date: '2023-06-21'},
+  //   { name: 'Event2', date: '2023-06-21'},
+  //   { name: 'Event3', date: '2023-06-21'},
+  // ]) ;
 
   newEventRow!: EventRow;
 
   showButtons: boolean = false;
 
   @Input() role!: string;
+
+  @Input() inputEvents!:Event[];
+
+  @Input() user_email!:string;
 
   event!:EventRow;
 
@@ -37,20 +43,30 @@ export class EventListComponent {
     this.eventClicked.emit(eventName);
   }
 
-  updateEvent(toUpdateEvent: EventRow) {
-    const dialogRef: MatDialogRef<UpdateEventComponent, any> = this.dialog.open(UpdateEventComponent, {
-      data: { event: toUpdateEvent }
-    });
+  updateEvent(toUpdateEventName: string) {
 
-    dialogRef.componentInstance.event_row.subscribe((object: EventRow) => {
-      const updatedEventIndex = this.dataSource.data.indexOf(toUpdateEvent);
-      if (updatedEventIndex !== -1) {
-        // Update the data for the event at the specified index
-        this.dataSource.data[updatedEventIndex] = object;
-        this.dataSource._updateChangeSubscription();
+    let toUpdateEvent:Event = {} as Event;
+    this.eventService.getEventByEventName(toUpdateEventName).subscribe({
+      next : value => {
+        toUpdateEvent = value;
+
+        const dialogRef: MatDialogRef<UpdateEventComponent, any> = this.dialog.open(UpdateEventComponent, {
+          data: { event: toUpdateEvent }
+        });
+
+        dialogRef.componentInstance.event_row.subscribe((object: EventRow) => {
+          const updatedEventIndex = this.dataSource.data.indexOf(toUpdateEvent);
+          if (updatedEventIndex !== -1) {
+            // Update the data for the event at the specified index
+            this.dataSource.data[updatedEventIndex] = object;
+            this.dataSource._updateChangeSubscription();
+          }
+          this.dialog.closeAll();
+        });
       }
-      this.dialog.closeAll();
-    });
+    })
+
+
   }
 
 
@@ -61,10 +77,15 @@ export class EventListComponent {
       this.showButtons = true;
       this.displayedColumns =  ['name', 'date', 'update', 'delete'];
     }
+    this.inputEvents.forEach(event=>{
+      this.dataSource.data.push({name:event.name, date:event.date});
+    });
   }
 
   addEvent(): void {
-    const dialogRef = this.dialog.open(AddEventComponent);
+    const dialogRef = this.dialog.open(AddEventComponent, {
+      data: { email: this.user_email}
+    });
     dialogRef.componentInstance.event_row.subscribe((object: EventRow) => {
       this.newEventRow = object;
       this.dataSource.data.push(this.newEventRow);

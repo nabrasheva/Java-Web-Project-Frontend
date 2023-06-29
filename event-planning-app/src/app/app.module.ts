@@ -18,6 +18,8 @@ import { UpdateTaskComponent } from './update-task/update-task.component';
 import { ShowGuestsComponent } from './show-guests/show-guests.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import {MatCardModule} from "@angular/material/card";
+import { HttpClientModule } from '@angular/common/http';
+import { ErrorModalComponent } from './error-modal/error-modal.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import {MatCardModule} from "@angular/material/card";
     AddTaskComponent,
     UpdateTaskComponent,
     ShowGuestsComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    ErrorModalComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +42,8 @@ import {MatCardModule} from "@angular/material/card";
     ReactiveFormsModule,
     AppRoutingModuleModule,
     MatCardModule,
-    NgOptimizedImage
+    NgOptimizedImage,
+    HttpClientModule
   ],
   exports:[ CommonModule],
   providers: [],
