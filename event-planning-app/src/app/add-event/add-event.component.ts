@@ -9,7 +9,7 @@ import {MAT_DIALOG_DATA} from "@angular/material/dialog";
   templateUrl: './add-event.component.html',
   styleUrls: ['./add-event.component.css']
 })
-export class AddEventComponent {
+export class AddEventComponent implements OnInit{
   constructor(@Inject(MAT_DIALOG_DATA) private dialogData: any, private eventService: EventService) {
   }
 

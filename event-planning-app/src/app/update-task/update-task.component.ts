@@ -42,11 +42,11 @@ export class UpdateTaskComponent {
 
     let formattedDate;
 
-    if(!this.areDatesEqual(new Date(newTask.due_date), new Date(this.task.due_date)))
+    if(!this.areDatesEqual(new Date(newTask.dueDate), new Date(this.task.due_date)))
     {
-      const year = newTask.due_date.getFullYear();
-      const month = String(newTask.due_date.getMonth() + 1).padStart(2, '0');
-      const day = String(newTask.due_date.getDate()).padStart(2, '0');
+      const year = newTask.dueDate.getFullYear();
+      const month = String(newTask.dueDate.getMonth() + 1).padStart(2, '0');
+      const day = String(newTask.dueDate.getDate()).padStart(2, '0');
 
       formattedDate = `${year}-${month}-${day}`;
     }

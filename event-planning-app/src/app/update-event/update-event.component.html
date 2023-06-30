@@ -23,5 +23,6 @@
   </mat-form-field>
 
   <button type="submit" mat-stroked-button color="primary" (click)="updateEvent()" >Update Event</button>
+  <app-error-modal *ngIf="error" [errorMessage]="errorMessage" (closeModal)="closeModal()"></app-error-modal>
 
 </div>

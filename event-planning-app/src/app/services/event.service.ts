@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {Event} from "../model/event";
 
 @Injectable({
   providedIn: 'root'
@@ -27,13 +26,13 @@ export class EventService {
   updateEvent(event: any, eventName:string): Observable<any>
   {
     const encodedEventName = encodeURIComponent(eventName);
-    return this.http.patch(`http://localhost:8079/events/${encodedEventName}`, event);
+    return this.http.patch(`http://localhost:8079/events/event/${encodedEventName}`, event);
   }
 
 
   deleteEvent(eventName:string): Observable<any>
   {
     const encodedEventName = encodeURIComponent(eventName);
-    return this.http.delete(`http://localhost:8079/events/${encodedEventName}`);
+    return this.http.delete(`http://localhost:8079/events/event/${encodedEventName}`);
   }
 }

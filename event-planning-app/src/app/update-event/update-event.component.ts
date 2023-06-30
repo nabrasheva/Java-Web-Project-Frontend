@@ -17,6 +17,8 @@ export class UpdateEventComponent {
   // minDate: Date = new Date(Date.now());
 
   eventForm!: FormGroup;
+  public error: boolean = false;
+  public errorMessage: string = '';
 
   constructor(@Inject(MAT_DIALOG_DATA) private dialogData: any,private formBuilder: FormBuilder, private eventService: EventService) {}
 
@@ -36,11 +38,19 @@ export class UpdateEventComponent {
       date1.getDate() === date2.getDate()
     );
   }
+  public showError(message:string): void {
+    this.error = true;
+    this.errorMessage = message;
+  }
 
+  public closeModal(): void {
+    this.error = false;
+    this.errorMessage = '';
+  }
   updateEvent() {
     const newEvent: Event = this.eventForm.getRawValue();
 
-    let formattedDate;
+    let formattedDate:string;
     type eventJsonType = {[key: string] : string}
     const eventJSON:eventJsonType = { };
 
@@ -51,22 +61,32 @@ export class UpdateEventComponent {
       const day = String(newEvent.date.getDate()).padStart(2, '0');
 
        formattedDate = `${year}-${month}-${day}`;
-      eventJSON['date'] = formattedDate;
+      eventJSON["date"] = formattedDate;
     }
-    else formattedDate = this.event.date;
+    // else formattedDate = this.event.date.toLocaleString();
 
     if(newEvent.description !== this.event.description)
     {
-      eventJSON['description'] = newEvent.description;
+      eventJSON["description"] = newEvent.description;
     }
     if(newEvent.location !== this.event.location)
     {
-      eventJSON['location'] = newEvent.location;
+      eventJSON["location"] = newEvent.location;
     }
 
-    this.eventService.updateEvent(eventJSON, this.event.name);
-    const newRow = {name: this.event.name, date: formattedDate};
-    this.event_row.emit(newRow);
-    this.eventForm.reset();
+    this.eventService.updateEvent(eventJSON, this.event.name).subscribe({
+      next: value =>{
+        console.log(value);
+        const newRow= {name: this.event.name, date: formattedDate};
+        this.event_row.emit(newRow);
+        this.eventForm.reset();
+      },
+      error: err => {
+        console.error(err);
+
+        this.showError(err.error.Message);
+      }
+    });
+
   }
 }

@@ -13,7 +13,7 @@
   <ng-container *ngIf="showButtons" matColumnDef="update">
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let element">
-      <mat-icon aria-hidden="false" aria-label="Example pen icon" fontIcon="edit" (click)="updateEvent(element.name)" ></mat-icon>
+      <mat-icon aria-hidden="false" aria-label="Example pen icon" fontIcon="edit" (click)="updateEvent(element)" ></mat-icon>
     </td>
   </ng-container>
   <ng-container *ngIf="showButtons" matColumnDef="delete">

@@ -2,13 +2,15 @@ import {ChangeDetectorRef, Component, EventEmitter, Output} from '@angular/core'
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {Task} from "../model/task";
+
 import {TaskRow} from "../model/task-row"
-import {EventRow} from "../model/event-row";
-import {AddEventComponent} from "../add-event/add-event.component";
+
 import {AddTaskComponent} from "../add-task/add-task.component";
-import {UpdateEventComponent} from "../update-event/update-event.component";
+
 import {UpdateTaskComponent} from "../update-task/update-task.component";
+
+import {TaskService} from "../services/task.service";
+import {Task} from "../model/task";
 
 @Component({
   selector: 'app-dashboard-page',
@@ -17,20 +19,21 @@ import {UpdateTaskComponent} from "../update-task/update-task.component";
 })
 export class DashboardPageComponent {
 
-  eventName!: string | null;
+  eventName!: string;
   role!: string | null;
   showButtons!:boolean;
   showUsers!:boolean;
   newTaskRow!: TaskRow;
-  dataSource: MatTableDataSource<TaskRow> = new MatTableDataSource([
-    { name: 'Task1', due_date: '2023-06-21', status:'To Do'},
-    { name: 'Task2', due_date: '2023-06-21', status: 'In Progress'},
-    { name: 'Task3', due_date: '2023-06-21', status: 'Done'},
-  ]) ;
+  inputTasks!: Task[];
+   dataSource: MatTableDataSource<TaskRow> = new MatTableDataSource();//[
+  //   { name: 'Task1', due_date: '2023-06-21', status:'To Do'},
+  //   { name: 'Task2', due_date: '2023-06-21', status: 'In Progress'},
+  //   { name: 'Task3', due_date: '2023-06-21', status: 'Done'},
+  // ]) ;
 
   displayedColumns: string[] = ['name', 'due_date', 'status'];
 
-  constructor(private dialog: MatDialog,private route: ActivatedRoute, private router: Router) { }
+  constructor(private dialog: MatDialog,private route: ActivatedRoute, private router: Router, private taskService: TaskService) { }
 
   navigateToProfile(): void {
     // Perform the navigation to the destination page using the eventId
@@ -44,6 +47,19 @@ export class DashboardPageComponent {
       this.eventName = params['name'];
     });
 
+    this.taskService.getAllTasksByEvent(this.eventName).subscribe({
+      next: value => {
+        this.inputTasks = value;
+        this.inputTasks.forEach(task => {
+          this.dataSource.data.push({name: task.name, due_date: task.dueDate.toLocaleString(), status:task.status});
+        });
+        this.dataSource._updateChangeSubscription();
+      },
+      error: err => {
+        console.log(err);
+      }
+    })
+
     if(this.role == 'admin')
     {
       this.showUsers = true;
@@ -56,7 +72,9 @@ export class DashboardPageComponent {
   }
 
   addTask(): void {
-    const dialogRef = this.dialog.open(AddTaskComponent);
+    const dialogRef = this.dialog.open(AddTaskComponent, {
+      data: {eventName: this.eventName}
+    });
     dialogRef.componentInstance.task_row.subscribe((object: TaskRow) => {
       this.newTaskRow = object;
       this.dataSource.data.push(this.newTaskRow);

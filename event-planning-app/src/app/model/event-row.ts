@@ -1,4 +1,4 @@
 export interface EventRow{
   name:string,
-  date:Date
+  date:string
 }

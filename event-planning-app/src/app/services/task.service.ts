@@ -16,18 +16,18 @@ export class TaskService {
     return this.http.get(`http://localhost:8079/events/event/${encodedEventName}/tasks`);
   }
 
-  createTask(eventName: string, task:Task): Observable<any>{
+  createTask(eventName: string, task:any): Observable<any>{
     const encodedEventName = encodeURIComponent(eventName);
-    return this.http.post(`http://localhost:8079/events/event/${encodedEventName}/tasks`, task);
+    return this.http.post(`http://localhost:8079/events/event/${encodedEventName}/newTask`, task);
   }
 
-  updateTask(eventName: string,taskName:string, task:Task): Observable<any>{
+  updateTask(eventName: string,taskName:string, task:any): Observable<any>{
     const encodedEventName = encodeURIComponent(eventName);
     const encodedTaskName = encodeURIComponent(taskName);
     return this.http.patch(`http://localhost:8079/events/event/${encodedEventName}/tasks/${encodedTaskName}`, task);
   }
 
-  deleteTask(eventName: string,taskName:string, task:Task): Observable<any>{
+  deleteTask(eventName: string,taskName:string, task:any): Observable<any>{
     const encodedEventName = encodeURIComponent(eventName);
     const encodedTaskName = encodeURIComponent(taskName);
     return this.http.delete(`http://localhost:8079/events/event/${encodedEventName}/tasks/${encodedTaskName}`);
