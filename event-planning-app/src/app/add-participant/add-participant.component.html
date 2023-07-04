@@ -1,0 +1,26 @@
+<div id="add-form" [formGroup]="participantForm">
+  <mat-form-field  >
+    <mat-label>Email</mat-label>
+    <input matInput id="email-input" formControlName="email">
+    <mat-error *ngIf="this.participantForm.get('email')?.hasError('required')">Email is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field  >
+    <mat-label>Role</mat-label>
+    <input matInput id="role-input" formControlName="role" readonly>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="isGuest">
+    <mat-label>Select</mat-label>
+    <mat-select formControlName="category">
+      <mat-option value="FAMILY">Family</mat-option>
+      <mat-option value="FRIENDS">Friends</mat-option>
+      <mat-option value="COLLEAGUES">Colleagues</mat-option>
+      <mat-option value="NONE">None</mat-option>
+    </mat-select>
+    <mat-error *ngIf="this.participantForm.get('category')?.hasError('required')">Category is required</mat-error>
+  </mat-form-field>
+
+  <button type="submit" mat-stroked-button color="primary" (click)="addParticipant()" >Add Participant</button>
+
+</div>
