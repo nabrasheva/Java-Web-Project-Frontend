@@ -23,6 +23,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ErrorModalComponent } from './error-modal/error-modal.component';
 import { SignupComponent } from './signup/signup.component';
 import { PasswordComponent } from './password/password.component';
+import { ShowPlannersComponent } from './show-planners/show-planners.component';
+import { UpdateUserComponent } from './update-user/update-user.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,9 @@ import { PasswordComponent } from './password/password.component';
     UpdateTaskComponent,
     ShowGuestsComponent,
     UserProfileComponent,
+    ErrorModalComponent,
+    ShowPlannersComponent,
+    UpdateUserComponent,
     ErrorModalComponent,
     LoginComponent,
     SignupComponent,

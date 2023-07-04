@@ -13,7 +13,7 @@
       <mat-card-title-group>
         <mat-card-title>Profile</mat-card-title>
         <div id="photo">
-          <img mat-card-lg-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="photo">
+          <img mat-card-lg-image src="{{user_info.profilePictureUrl}}" alt="photo">
         </div>
       </mat-card-title-group>
     </mat-card-header>
@@ -22,30 +22,34 @@
       <mat-list>
         <mat-list-item>
           <span matListItemTitle>Username</span>
-          <span matListItemLine>nabrasheva</span>
+          <span matListItemLine>{{user_info.username}}</span>
         </mat-list-item>
         <mat-list-item>
           <span matListItemTitle>Email</span>
-          <span matListItemLine>nabrasheva@gmail.com</span>
+          <span matListItemLine>{{user_info.email}}</span>
         </mat-list-item>
         <mat-list-item>
           <span matListItemTitle>First Name</span>
-          <span matListItemLine>Niya</span>
+          <span matListItemLine *ngIf="user_info.firstName">{{user_info.firstName}}</span>
+          <span matListItemLine *ngIf="!user_info.firstName">-</span>
         </mat-list-item>
         <mat-list-item>
           <span matListItemTitle>Last Name</span>
-          <span matListItemLine>Abrasheva</span>
+          <span matListItemLine *ngIf="user_info.lastName">{{user_info.lastName}}</span>
+          <span matListItemLine *ngIf="!user_info.lastName">-</span>
         </mat-list-item>
         <mat-list-item>
           <span matListItemTitle>Date of Birth</span>
-          <span matListItemLine>27.04</span>
+          <span matListItemLine *ngIf="user_info.dateOfBirth">{{user_info.dateOfBirth}}</span>
+          <span matListItemLine *ngIf="!user_info.dateOfBirth">-</span>
         </mat-list-item>
         <mat-list-item>
           <span matListItemTitle>Address</span>
-          <span matListItemLine>Plovdiv, Bulgaria</span>
+          <span matListItemLine *ngIf="user_info.address">{{user_info.address}}</span>
+          <span matListItemLine *ngIf="!user_info.address">-</span>
         </mat-list-item>
       </mat-list>
     </mat-card-content>
-    <button type="button" mat-stroked-button color="primary">Update Profile</button>
+    <button type="button" mat-stroked-button color="primary"(click)="updateUser()">Update Profile</button>
   </mat-card>
 </div>

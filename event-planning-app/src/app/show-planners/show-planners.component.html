@@ -1,3 +1,4 @@
+
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
   <ng-container matColumnDef="user_email">
@@ -5,15 +6,10 @@
     <td mat-cell *matCellDef="let element"> {{element.user_email}} </td>
   </ng-container>
 
-  <ng-container matColumnDef="category">
-    <th mat-header-cell *matHeaderCellDef> Category</th>
-    <td mat-cell *matCellDef="let element"> {{element.category}} </td>
-  </ng-container>
-
   <ng-container  matColumnDef="delete">
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let element">
-      <mat-icon aria-hidden="false" aria-label="Example pen icon" fontIcon="delete" (click)="deleteGuest(element)" ></mat-icon>
+      <mat-icon aria-hidden="false" aria-label="Example pen icon" fontIcon="delete" (click)="deletePlanner(element)" ></mat-icon>
     </td>
   </ng-container>
 
@@ -22,6 +18,6 @@
 </table>
 
 <div  class="button-list">
-  <button mat-stroked-button color="primary" id="add-btn" (click)="addGuest()">Add</button>
+  <button mat-stroked-button color="primary" id="add-btn" (click)="addPlanner()">Add</button>
 </div>
 

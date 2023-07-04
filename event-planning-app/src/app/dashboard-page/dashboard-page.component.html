@@ -1,6 +1,4 @@
-<!--<p>dashboard-page works!</p>-->
 
-<!--<p *ngIf="eventName">{{eventName}}</p>-->
 <p>
   <mat-toolbar id="header">
     <span id="header_toolbar">Event Planning Tool</span>
@@ -50,40 +48,16 @@
 <div *ngIf="showButtons" class="buttons">
   <button mat-stroked-button color="primary" id="add-btn" (click)="addTask()" >Add Task</button>
   <div *ngIf="showUsers">
-    <button mat-stroked-button color="primary" id="guests-btn">Show Guests</button>
-    <button mat-stroked-button color="primary" id="planners-btn">Show Planners</button>
+    <button mat-stroked-button color="primary" id="guests-btn" (click)="showGuests()">Show Guests</button>
+    <button mat-stroked-button color="primary" id="planners-btn" (click)="showPlanners()">Show Planners</button>
   </div>
 </div>
 
-<!--<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">-->
+<div>
+  <app-show-guests  *ngIf="isClickedShowGuests" [eventName]="eventName"></app-show-guests>
+</div>
 
-<!--  <ng-container matColumnDef="name">-->
-<!--    <th mat-header-cell *matHeaderCellDef> Name</th>-->
-<!--    <td mat-cell *matCellDef="let element"> <a (click)="onEventClick(element.name)">{{ element.name }}</a> </td>-->
-<!--  </ng-container>-->
 
-<!--  <ng-container matColumnDef="date">-->
-<!--    <th mat-header-cell *matHeaderCellDef> Date</th>-->
-<!--    <td mat-cell *matCellDef="let element"> {{element.date}} </td>-->
-<!--  </ng-container>-->
-
-<!--  <ng-container *ngIf="showButtons" matColumnDef="update">-->
-<!--    <th mat-header-cell *matHeaderCellDef></th>-->
-<!--    <td mat-cell *matCellDef="let element">-->
-<!--      <mat-icon aria-hidden="false" aria-label="Example pen icon" fontIcon="edit" (click)="updateEvent(element)" ></mat-icon>-->
-<!--    </td>-->
-<!--  </ng-container>-->
-<!--  <ng-container *ngIf="showButtons" matColumnDef="delete">-->
-<!--    <th mat-header-cell *matHeaderCellDef></th>-->
-<!--    <td mat-cell *matCellDef="let element">-->
-<!--      <mat-icon aria-hidden="false" aria-label="Example pen icon" fontIcon="delete" (click)="deleteEvent(element)" ></mat-icon>-->
-<!--    </td>-->
-<!--  </ng-container>-->
-
-<!--  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>-->
-<!--  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>-->
-<!--</table>-->
-
-<!--<div *ngIf="showButtons" class="button-list">-->
-<!--  <button mat-stroked-button color="primary" id="add-btn" (click)="openPopupForm()">Add</button>-->
-<!--</div>-->
+<div>
+  <app-show-planners  *ngIf="isClickedShowPlanners" [eventName]="eventName"></app-show-planners>
+</div>
