@@ -14,9 +14,18 @@ export class EventService {
     return this.http.get(`http://localhost:8079/events/${email}`);
   }
 
-  getEventByEventName(evenName:string): Observable<any>
+  getEventByEventName(eventName:string): Observable<any>
   {
-    return this.http.get(`http://localhost:8079/events/event/${evenName}`);
+    const encodedEventName = encodeURIComponent(eventName);
+
+    return this.http.get(`http://localhost:8079/events/event/${encodedEventName}`);
+  }
+
+  getEventUsersByEventAndRole(eventName:string, role:string): Observable<any>
+  {
+    const encodedEventName = encodeURIComponent(eventName);
+
+    return this.http.get(`http://localhost:8079/events/event/${encodedEventName}/roles/${role}`)
   }
   createEvent(event:any, email:string): Observable<any> {
     // const encodedEmail = encodeURIComponent(email);

@@ -15,7 +15,7 @@ export class WelcomePageComponent {
   plannerEvents!:Event[];
   guestEvents!:Event[];
   user_email!:string;
-  // isInitialized!: boolean;
+
 
   constructor(private router: Router, private eventService:EventService) {
   }
@@ -37,9 +37,8 @@ export class WelcomePageComponent {
   }
 
   navigateToEvent(eventName: string): void {
-    // Perform the navigation to the destination page using the eventId
-    // Example:
-    this.router.navigate(['dashboard', {name: eventName, role: this.role}]).then(r => r);
+
+    this.router.navigate(['dashboard', {name: eventName, role: this.role, user_email: this.user_email}]).then(r => r);
   }
 
   initializeChildComponent(role: string) {

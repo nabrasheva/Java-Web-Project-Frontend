@@ -63,7 +63,7 @@ export class UpdateEventComponent {
        formattedDate = `${year}-${month}-${day}`;
       eventJSON["date"] = formattedDate;
     }
-    // else formattedDate = this.event.date.toLocaleString();
+    else formattedDate = this.event.date.toLocaleString();
 
     if(newEvent.description !== this.event.description)
     {

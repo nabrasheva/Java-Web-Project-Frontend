@@ -11,6 +11,7 @@ import {UpdateTaskComponent} from "../update-task/update-task.component";
 
 import {TaskService} from "../services/task.service";
 import {Task} from "../model/task";
+import {Event} from "../model/event";
 
 @Component({
   selector: 'app-dashboard-page',
@@ -25,19 +26,18 @@ export class DashboardPageComponent {
   showUsers!:boolean;
   newTaskRow!: TaskRow;
   inputTasks!: Task[];
-   dataSource: MatTableDataSource<TaskRow> = new MatTableDataSource();//[
-  //   { name: 'Task1', due_date: '2023-06-21', status:'To Do'},
-  //   { name: 'Task2', due_date: '2023-06-21', status: 'In Progress'},
-  //   { name: 'Task3', due_date: '2023-06-21', status: 'Done'},
-  // ]) ;
+  user_email!:string;
+  isClickedShowGuests:boolean = false;
+  isClickedShowPlanners:boolean = false;
+   dataSource: MatTableDataSource<TaskRow> = new MatTableDataSource();
 
   displayedColumns: string[] = ['name', 'due_date', 'status'];
 
   constructor(private dialog: MatDialog,private route: ActivatedRoute, private router: Router, private taskService: TaskService) { }
 
   navigateToProfile(): void {
-    // Perform the navigation to the destination page using the eventId
-    // Example:
+
+
     this.router.navigate(['profile']).then(r => r);
   }
   ngOnInit(): void {
@@ -45,6 +45,7 @@ export class DashboardPageComponent {
 
       this.role = params['role'];
       this.eventName = params['name'];
+      this.user_email = params['user_email'];
     });
 
     this.taskService.getAllTasksByEvent(this.eventName).subscribe({
@@ -73,7 +74,7 @@ export class DashboardPageComponent {
 
   addTask(): void {
     const dialogRef = this.dialog.open(AddTaskComponent, {
-      data: {eventName: this.eventName}
+      data: {eventName: this.eventName, user_email:this.user_email}
     });
     dialogRef.componentInstance.task_row.subscribe((object: TaskRow) => {
       this.newTaskRow = object;
@@ -85,26 +86,54 @@ export class DashboardPageComponent {
   }
 
   deleteTask(element: TaskRow) {
-    const index = this.dataSource.data.indexOf(element);
-    if (index !== -1) {
-      this.dataSource.data.splice(index, 1);
-      this.dataSource._updateChangeSubscription();
-    }
+
+    this.taskService.deleteTask(this.eventName, element.name).subscribe({
+      next: value => {
+        console.log(value);
+        const index = this.dataSource.data.indexOf(element);
+        if (index !== -1) {
+          this.dataSource.data.splice(index, 1);
+          this.dataSource._updateChangeSubscription();
+        }
+      },
+      error: err => {
+        console.log(err);
+      }
+    })
+
   }
 
-  updateTask(toUpdateTask: TaskRow) {
-    const dialogRef: MatDialogRef<UpdateTaskComponent, any> = this.dialog.open(UpdateTaskComponent, {
-      data: { task: toUpdateTask }
-    });
+  updateTask(toUpdateTaskRow: TaskRow) {
 
-    dialogRef.componentInstance.task_row.subscribe((object: TaskRow) => {
-      const updatedTaskIndex = this.dataSource.data.indexOf(toUpdateTask);
-      if (updatedTaskIndex !== -1) {
-        // Update the data for the event at the specified index
-        this.dataSource.data[updatedTaskIndex] = object;
-        this.dataSource._updateChangeSubscription();
+    let toUpdateTask: Task = {} as Task;
+
+    this.taskService.getTask(this.eventName, toUpdateTaskRow.name).subscribe({
+      next: value => {
+        toUpdateTask = value;
+
+        const dialogRef: MatDialogRef<UpdateTaskComponent, any> = this.dialog.open(UpdateTaskComponent, {
+          data: { task: toUpdateTask }
+        });
+
+        dialogRef.componentInstance.task_row.subscribe((object: TaskRow) => {
+          const updatedTaskIndex = this.dataSource.data.indexOf(toUpdateTaskRow);
+          if (updatedTaskIndex !== -1) {
+
+            this.dataSource.data[updatedTaskIndex] = object;
+            this.dataSource._updateChangeSubscription();
+          }
+          this.dialog.closeAll();
+        });
       }
-      this.dialog.closeAll();
-    });
+    })
+
+  }
+
+  showGuests() {
+    this.isClickedShowGuests = !this.isClickedShowGuests;
+  }
+
+  showPlanners() {
+    this.isClickedShowPlanners = !this.isClickedShowPlanners;
   }
 }

@@ -20,6 +20,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import {MatCardModule} from "@angular/material/card";
 import { HttpClientModule } from '@angular/common/http';
 import { ErrorModalComponent } from './error-modal/error-modal.component';
+import { ShowPlannersComponent } from './show-planners/show-planners.component';
+import { UpdateUserComponent } from './update-user/update-user.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { ErrorModalComponent } from './error-modal/error-modal.component';
     UpdateTaskComponent,
     ShowGuestsComponent,
     UserProfileComponent,
-    ErrorModalComponent
+    ErrorModalComponent,
+    ShowPlannersComponent,
+    UpdateUserComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
 
 import {Task} from "../model/task";
@@ -13,6 +13,7 @@ import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 export class AddTaskComponent implements OnInit{
   minDate: Date = new Date(Date.now());
   @Output() task_row = new EventEmitter<any>();
+ // @Input() user_email!:string;
   constructor(@Inject(MAT_DIALOG_DATA) private dialogData: any, private fb: FormBuilder, private taskService: TaskService) {
   }
 
@@ -21,13 +22,12 @@ export class AddTaskComponent implements OnInit{
   public errorMessage: string = '';
   ngOnInit()
   {
-    //this.dialogData.eventName;
     this.taskForm = this.fb.group({
       name: [''],
       dueDate: [''],
       description: [''],
       status: [''],
-      creatorEmail: [''],
+      creatorEmail: [this.dialogData.user_email],
       eventName: [this.dialogData.eventName],
       assignees: this.fb.array([])
     });
