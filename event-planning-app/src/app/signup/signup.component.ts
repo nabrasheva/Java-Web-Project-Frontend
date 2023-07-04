@@ -15,6 +15,9 @@ export class SignupComponent {
   errorMessage: string = '';
   passwordMismatch: boolean = false;
 
+  infoMessage: string = '';
+  isInfoMessage: boolean = false;
+
   constructor(
     private fb: FormBuilder,
     private signupService: SignupService,
@@ -38,7 +41,7 @@ export class SignupComponent {
     if(!this.signupForm.valid){
       return;
     }
-//TODO при delete user da se izchistva ot local storage neshtata otnovo
+
     this.errorMessage = '';
 
     const password = this.signupForm.get('password')?.value;
@@ -50,16 +53,23 @@ export class SignupComponent {
     }
 
     this.signupService.signup(this.signupForm.value).subscribe({
-      next: () => {
-        this.router.navigate(['/login']);
+      next: (value) => {
+        //this.router.navigate(['/login']);
+        this.showInfo(value.message);
       },
       error: err => {
-        if (err.status === 409) { // HTTP 409 Conflict status code indicates duplicate email
-          this.errorMessage = 'User with this email already exists';
-        } else {
           this.errorMessage = 'An error occurred during signup';
-        }
       }
     });
+  }
+
+  public showInfo(message:string): void {
+    this.isInfoMessage = true;
+    this.infoMessage = message;
+  }
+
+  public closeModal(): void {
+    this.isInfoMessage = false;
+    this.infoMessage = '';
   }
 }

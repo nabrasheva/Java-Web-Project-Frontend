@@ -25,6 +25,10 @@ import { SignupComponent } from './signup/signup.component';
 import { PasswordComponent } from './password/password.component';
 import { ShowPlannersComponent } from './show-planners/show-planners.component';
 import { UpdateUserComponent } from './update-user/update-user.component';
+import { InfoEmailComponent } from './info-email/info-email.component';
+import { VerifyEmailComponent } from './verify-email/verify-email.component';
+import { ResetPasswordEmailComponent } from './reset-password-email/reset-password-email.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +48,11 @@ import { UpdateUserComponent } from './update-user/update-user.component';
     ErrorModalComponent,
     LoginComponent,
     SignupComponent,
-    PasswordComponent
+    PasswordComponent,
+    InfoEmailComponent,
+    VerifyEmailComponent,
+    ResetPasswordEmailComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
