@@ -17,12 +17,13 @@ export class WelcomePageComponent {
   user_email!:string;
   // isInitialized!: boolean;
 
-  constructor(private router: Router, private eventService:EventService) {
+  constructor(private router: Router, private eventService: EventService) {
   }
 
   ngOnInit(): void { //TODO!!!
 
-    this.user_email = 'niya@test.com';
+    this.user_email = localStorage.getItem('email') || '';
+
     this.eventService.getEventsByUser(this.user_email).subscribe({
       next: (data) => {
         this.adminEvents = data.admin;

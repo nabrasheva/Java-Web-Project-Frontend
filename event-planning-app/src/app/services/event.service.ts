@@ -1,17 +1,21 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventService {
-
-  constructor(private http: HttpClient) { }
+  private token: string;
+  private headers: HttpHeaders;
+  constructor(private http: HttpClient) {
+    this.token = localStorage.getItem('token') || '';
+    this.headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+  }
 
   getEventsByUser(email:string): Observable<any> {
    // const encodedEmail = encodeURIComponent(email);
-    return this.http.get(`http://localhost:8079/events/${email}`);
+    return this.http.get(`http://localhost:8079/events/${email}`, { headers: this.headers });
   }
 
   getEventByEventName(evenName:string): Observable<any>
