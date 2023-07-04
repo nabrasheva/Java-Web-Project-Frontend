@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import {MaterialUIModule} from "./material-ui/material-ui.module";
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { EventListComponent } from './event-list/event-list.component';
+import { LoginComponent } from './login/login.component'
 // import { MatTableModule } from  '@angular/material/table';
 // import { MatButtonModule } from '@angular/material/button';
 import {CommonModule, NgOptimizedImage} from '@angular/common';
@@ -20,8 +21,14 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import {MatCardModule} from "@angular/material/card";
 import { HttpClientModule } from '@angular/common/http';
 import { ErrorModalComponent } from './error-modal/error-modal.component';
+import { SignupComponent } from './signup/signup.component';
+import { PasswordComponent } from './password/password.component';
 import { ShowPlannersComponent } from './show-planners/show-planners.component';
 import { UpdateUserComponent } from './update-user/update-user.component';
+import { InfoEmailComponent } from './info-email/info-email.component';
+import { VerifyEmailComponent } from './verify-email/verify-email.component';
+import { ResetPasswordEmailComponent } from './reset-password-email/reset-password-email.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +44,15 @@ import { UpdateUserComponent } from './update-user/update-user.component';
     UserProfileComponent,
     ErrorModalComponent,
     ShowPlannersComponent,
-    UpdateUserComponent
+    UpdateUserComponent,
+    ErrorModalComponent,
+    LoginComponent,
+    SignupComponent,
+    PasswordComponent,
+    InfoEmailComponent,
+    VerifyEmailComponent,
+    ResetPasswordEmailComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
