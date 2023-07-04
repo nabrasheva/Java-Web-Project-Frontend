@@ -2,11 +2,13 @@
   <mat-form-field>
     <mat-label>Name</mat-label>
     <input matInput id="name-input" formControlName="name">
+    <mat-error *ngIf="this.taskForm.get('name')?.hasError('required')">Name is required</mat-error>
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Choose a date</mat-label>
     <input matInput [min]="minDate" [matDatepicker]="picker" id="date-input" formControlName="dueDate">
+    <mat-error *ngIf="this.taskForm.get('dueDate')?.hasError('required')">Due Date is required</mat-error>
     <mat-hint>MM/DD/YYYY</mat-hint>
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
@@ -19,6 +21,7 @@
       <mat-option value="IN_PROGRESS">In Progress</mat-option>
       <mat-option value="DONE">Done</mat-option>
     </mat-select>
+    <mat-error *ngIf="this.taskForm.get('status')?.hasError('required')">Status is required</mat-error>
   </mat-form-field>
 
   <mat-form-field>

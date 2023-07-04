@@ -29,6 +29,7 @@ import { InfoEmailComponent } from './info-email/info-email.component';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import { ResetPasswordEmailComponent } from './reset-password-email/reset-password-email.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { AddParticipantComponent } from './add-participant/add-participant.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     InfoEmailComponent,
     VerifyEmailComponent,
     ResetPasswordEmailComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    AddParticipantComponent
   ],
   imports: [
     BrowserModule,

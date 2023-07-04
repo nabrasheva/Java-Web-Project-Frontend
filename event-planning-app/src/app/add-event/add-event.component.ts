@@ -24,9 +24,9 @@ export class AddEventComponent implements OnInit{
   user_email!: string;
 
   eventForm: FormGroup = new FormGroup({
-      name: new FormControl(''),
-      date: new FormControl(''),
-      location: new FormControl(''),
+      name: new FormControl('', [Validators.required]),
+      date: new FormControl('', [Validators.required]),
+      location: new FormControl('', [Validators.required]),
       description: new FormControl('')
     }
     // }, {
@@ -49,6 +49,9 @@ export class AddEventComponent implements OnInit{
   }
 
   public addEvent() {
+    if(!this.eventForm.valid){
+      return;
+    }
     const newEvent: Event = this.eventForm.getRawValue();
 
     const year = newEvent.date.getFullYear();

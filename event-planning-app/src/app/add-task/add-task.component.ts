@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 
 import {Task} from "../model/task";
 import {TaskService} from "../services/task.service";
@@ -23,10 +23,10 @@ export class AddTaskComponent implements OnInit{
   ngOnInit()
   {
     this.taskForm = this.fb.group({
-      name: [''],
-      dueDate: [''],
+      name: ['', Validators.required],
+      dueDate: ['', Validators.required],
       description: [''],
-      status: [''],
+      status: ['', Validators.required],
       creatorEmail: [this.dialogData.user_email],
       eventName: [this.dialogData.eventName],
       assignees: this.fb.array([])
@@ -39,7 +39,7 @@ export class AddTaskComponent implements OnInit{
 
   // Method to add a new assignee form control
   addAssignee() {
-    this.assignees.push(this.fb.control(''));
+    this.assignees.push(this.fb.control('', Validators.required));
   }
 
   // Method to remove an assignee form control
@@ -65,12 +65,22 @@ export class AddTaskComponent implements OnInit{
     this.errorMessage = '';
   }
   addTask() {
+    if(!this.taskForm.valid){
+      return;
+    }
+
     const newTask: Task = this.taskForm.getRawValue();
     const year = newTask.dueDate.getFullYear();
     const month = String(newTask.dueDate.getMonth() + 1).padStart(2, '0');
     const day = String(newTask.dueDate.getDate()).padStart(2, '0');
 
+    if(newTask.assignees.length == 0)
+    {
+      this.showError("There should be at lest 1 assignee!");
+      return;
+    }
     const formattedDate = `${year}-${month}-${day}`;
+
       const task ={
         name: newTask.name,
         description: newTask.description,

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output, OnInit, Inject} from '@angular/core';
 import {EventRow} from "../model/event-row";
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Event} from "../model/event";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {EventService} from "../services/event.service";
@@ -26,8 +26,8 @@ export class UpdateEventComponent {
     this.event = this.dialogData.event;
     this.eventForm = this.formBuilder.group({
       name: [this.event.name],
-      date: [this.event.date],
-      location: [this.event.location],
+      date: [this.event.date, Validators.required],
+      location: [this.event.location, Validators.required],
       description: [this.event.description]
     });
   }
@@ -48,6 +48,9 @@ export class UpdateEventComponent {
     this.errorMessage = '';
   }
   updateEvent() {
+    if(!this.eventForm.valid){
+      return;
+    }
     const newEvent: Event = this.eventForm.getRawValue();
 
     let formattedDate:string;

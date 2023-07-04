@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { SignupService } from "../services/signup.service";
-import {PasswordRequest} from "../model/password";
 
 @Component({
   selector: 'app-signup',
@@ -26,10 +25,8 @@ export class SignupComponent {
     this.signupForm = this.fb.group({
       username: ['', Validators.required],
       email: ['', Validators.email],
-      // passwordGroup: this.fb.group({
       password: ['', Validators.pattern('^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$')],
       confirmPassword: ['', Validators.pattern('^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$')], //},
-      //{ validators: this.passwordMatchValidator}),
       firstName: [''],
       lastName: [''],
       dateOfBirth: [''],
@@ -54,7 +51,6 @@ export class SignupComponent {
 
     this.signupService.signup(this.signupForm.value).subscribe({
       next: (value) => {
-        //this.router.navigate(['/login']);
         this.showInfo(value.message);
       },
       error: err => {

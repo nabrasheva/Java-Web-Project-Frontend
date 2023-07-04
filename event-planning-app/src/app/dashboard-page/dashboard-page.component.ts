@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, EventEmitter, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
@@ -12,13 +12,14 @@ import {UpdateTaskComponent} from "../update-task/update-task.component";
 import {TaskService} from "../services/task.service";
 import {Task} from "../model/task";
 import {Event} from "../model/event";
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-dashboard-page',
   templateUrl: './dashboard-page.component.html',
   styleUrls: ['./dashboard-page.component.css']
 })
-export class DashboardPageComponent {
+export class DashboardPageComponent implements OnInit{
 
   eventName!: string;
   role!: string | null;
@@ -33,7 +34,8 @@ export class DashboardPageComponent {
 
   displayedColumns: string[] = ['name', 'due_date', 'status'];
 
-  constructor(private dialog: MatDialog,private route: ActivatedRoute, private router: Router, private taskService: TaskService) { }
+  constructor(private dialog: MatDialog,private route: ActivatedRoute, private router: Router, private taskService: TaskService,
+              private authService:AuthService) { }
 
   navigateToProfile(): void {
 
@@ -135,5 +137,10 @@ export class DashboardPageComponent {
 
   showPlanners() {
     this.isClickedShowPlanners = !this.isClickedShowPlanners;
+  }
+
+  logOut()
+  {
+    this.authService.logout();
   }
 }

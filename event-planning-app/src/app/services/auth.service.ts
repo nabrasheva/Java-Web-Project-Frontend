@@ -26,8 +26,12 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     const token = localStorage.getItem('token');
+    const email = localStorage.getItem('email');
 
     if(!token){
+      return false;
+    }
+    if(!email){
       return false;
     }
     return true;
@@ -35,7 +39,8 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('token');
-    this.router.navigate(['/login']);
+    localStorage.removeItem('email');
+    this.router.navigate(['/login']).then(r=>r);
   }
 
 }

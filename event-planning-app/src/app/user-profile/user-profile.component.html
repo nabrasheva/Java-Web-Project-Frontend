@@ -2,18 +2,18 @@
   <mat-toolbar id="header">
     <span id="header_toolbar">Event Planning Tool</span>
     <span class="spacer"></span>
-    <button mat-stroked-button color="primary" class="header-btn">Back</button>
-    <button mat-stroked-button color="primary" class="header-btn">Log Out</button>
+    <button mat-stroked-button color="primary" class="header-btn" ><a [routerLink]="['/welcomePage']">Back</a></button>
+    <button mat-stroked-button color="primary" class="header-btn" (click)="logOut()" >Log Out</button>
   </mat-toolbar>
 </p>
 
 <div id="profile_info">
-  <mat-card class="example-card">
+  <mat-card class="example-card" *ngIf="user_info">
     <mat-card-header>
       <mat-card-title-group>
         <mat-card-title>Profile</mat-card-title>
         <div id="photo">
-          <img mat-card-lg-image src="{{user_info.profilePictureUrl}}" alt="photo">
+          <img mat-card-lg-image [src]="user_info.profilePictureUrl" alt="photo">
         </div>
       </mat-card-title-group>
     </mat-card-header>

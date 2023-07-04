@@ -34,10 +34,10 @@ export class LoginComponent {
     this.authService.login(this.loginForm.value).subscribe({
     next: () => {
       localStorage.setItem('email', this.loginForm.get('email')?.value);
-      this.router.navigate(['']);
+      this.router.navigate(['welcomePage']).then(r=>r);
     },
     error: err => {
-      this.errorMessage = err;
+      this.errorMessage = 'Email or password is incorrect';
     }
   });
   }

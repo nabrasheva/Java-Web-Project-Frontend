@@ -7,7 +7,7 @@
         <mat-form-field>
           <mat-label>Username:</mat-label>
           <input matInput name="username" type="text" required formControlName="username">
-          <mat-error *ngIf="this.signupForm.get('username')?.hasError('username')">Username must be valid</mat-error>
+          <mat-error *ngIf="this.signupForm.get('username')?.hasError('required')">Username must be valid</mat-error>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Email:</mat-label>

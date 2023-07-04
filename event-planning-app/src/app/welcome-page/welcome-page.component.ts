@@ -2,13 +2,14 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {EventService} from "../services/event.service";
 import {Event} from "../model/event";
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-welcome-page',
   templateUrl: './welcome-page.component.html',
   styleUrls: ['./welcome-page.component.css'],
 })
-export class WelcomePageComponent {
+export class WelcomePageComponent implements OnInit{
 
   role!: string;
   adminEvents!:Event[];
@@ -17,7 +18,7 @@ export class WelcomePageComponent {
   user_email!:string;
 
 
-  constructor(private router: Router, private eventService: EventService) {
+  constructor(private router: Router, private eventService: EventService, private authService:AuthService) {
   }
 
   ngOnInit(): void { //TODO!!!
@@ -47,5 +48,14 @@ export class WelcomePageComponent {
     if (this.role === role) {
       this.role = '';
     } else this.role = role;
+  }
+
+  navigateToProfile() {
+    this.router.navigate(['profile']).then(r=>r);
+  }
+
+  logOut()
+  {
+    this.authService.logout();
   }
 }

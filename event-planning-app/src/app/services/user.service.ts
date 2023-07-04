@@ -1,21 +1,25 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-
-  constructor(private http: HttpClient) { }
+  private token: string;
+  private headers: HttpHeaders;
+  constructor(private http: HttpClient) {
+    this.token = localStorage.getItem('token') || '';
+    this.headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+  }
 
   getUserByEmail(email:string):Observable<any>
   {
-    return this.http.get(`http://localhost:8079/users/userInfo/${email}`);
+    return this.http.get(`http://localhost:8079/users/userInfo/${email}`, { headers: this.headers });
   }
 
   updateUser(email:string, user:any):Observable<any>
   {
-    return this.http.patch(`http://localhost:8079/users/updateUser/georgi@test.com`, user);
+    return this.http.patch(`http://localhost:8079/users/updateUser/${email}`, user, { headers: this.headers });
   }
 }
